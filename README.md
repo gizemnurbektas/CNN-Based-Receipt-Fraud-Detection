@@ -1,97 +1,39 @@
 # CNN-Based Receipt Fraud Detection (Real vs Fake)
 
-This project is a **CNN-based image classification application** developed to detect **manipulation or fraud suspicion** in receipt and payment slip images.  
-The model is trained using **REAL (original)** and **FAKE (manually manipulated or scribbled)** receipt images and can be tested interactively via a **Gradio** web interface.
+This project explores binary receipt-image classification with a custom convolutional neural network (CNN) implemented in PyTorch. The notebook prepares image paths, builds a balanced real/fake dataset, trains the model, and includes an image-upload prediction interface using Gradio.
 
----
+## Notebook workflow
 
-## Project Objective
-The goal of this project is to develop a deep learning model capable of automatically detecting visual manipulations in receipt and banking document images, addressing common fraud-related issues in the banking and financial domain.
+- Extract `receiptimages.zip` into the Colab workspace.
+- Read receipt images from folders named `real` and `fake`.
+- Resize images to 224 × 224 pixels and create training and validation datasets.
+- Train a three-stage CNN with PyTorch and save model weights as `cnn_model.pth`.
+- Use the Gradio interface to submit an image and view the predicted class and score.
 
----
+Labels in the notebook are `REAL` and `FAKE`. The predictions are outputs of an experimental image classifier and should be interpreted as model estimates.
 
-## Technologies Used
-- Python  
-- PyTorch  
-- Convolutional Neural Networks (CNN)  
-- OpenCV  
-- Gradio  
+## Data
 
----
+Provide `receiptimages.zip` in the Colab runtime. Its extracted directory should contain image folders named `real` and `fake`. The image archive is not included in this repository.
 
-## Input / Output
-- **Input:** Receipt or payment slip image (JPG / PNG)  
-- **Output:**  
-  - `REAL (Original)`  
-  - `FAKE (Manipulation Suspicion)`  
-  - Confidence score (probability)
+## Current repository contents
 
----
+- `CNN_Based_Receipt_Fraud_Detection.ipynb` — model definition, data preparation, and interface code.
+- `README.md` — project overview and usage notes.
 
-## Project Structure
-The project follows the directory structure below:
+## Important execution note
 
-receipt_fraud_cnn/
-│
-├── model.py # CNN model architecture
-├── train.py # Model training script
-├── serve.py # Gradio web interface
-│
-├── cnn_model.pth # Trained model (generated after training)
-│
-└── data/
-└── receiptimages/
-├── real/ # Original receipt images
-└── fake/ # Manipulated / scribbled receipt images
+The notebook currently calls `train.py` and `serve.py` and imports `ReceiptFraudCNN` from `model.py`, but those helper files are not present in this repository. The image archive is also external. As committed, the notebook is therefore not a self-contained, ready-to-run demo; add or generate the referenced helper files and provide the dataset before running the training and interface cells.
 
-## Installation
-This project is designed to run on **Google Colab**.
+## Run in Google Colab
 
-Model Training
+1. Open `CNN_Based_Receipt_Fraud_Detection.ipynb` in Google Colab.
+2. Provide the expected image archive and verify its `real` and `fake` folder structure.
+3. Resolve the referenced helper scripts (`model.py`, `train.py`, and `serve.py`) before running the training and Gradio cells.
+4. Install PyTorch, OpenCV, Gradio, and any other packages requested by the runtime.
 
-To train the model, run:
+Training uses a configurable number of epochs and an image dataset; runtime and model quality depend on the data, split, and settings. No fixed accuracy is claimed here.
 
-python train.py
+## Author
 
-
-After training, the model weights will be saved as cnn_model.pth.
-
-Gradio Demo (Live Interface)
-
-To launch the Gradio interface:
-
-python serve.py
-
-
-After execution, the terminal will display a message similar to:
-
-Running on public URL: https://xxxxxx.gradio.live
-
-
-Open the generated link to:
-
-Upload receipt images
-
-View REAL / FAKE predictions in real time
-
-Demo Scenario
-
-Upload an original receipt → the model predicts REAL
-
-Upload a manipulated receipt → the model predicts FAKE
-
-Perform 2–3 example tests to complete the presentation
-
-Labeling
-
-REAL (1) → Original receipt
-
-FAKE (0) → Manipulated receipt
-
-Notes
-
-The FAKE class is created using manually altered receipt images.
-
-This project is intended for educational and demonstration purposes.
-
-For real-world deployment, training on a larger and more diverse dataset is recommended.
+Gizem Bektaş
